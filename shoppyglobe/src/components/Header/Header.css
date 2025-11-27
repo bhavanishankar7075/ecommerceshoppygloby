@@ -2,6 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* FIX: Ensure 100% width and use consistent padding for full screen coverage */
+  width: 100%;
   padding: 1rem 2rem;
   background-color: var(--text-dark); /* Dark background */
   color: white;
