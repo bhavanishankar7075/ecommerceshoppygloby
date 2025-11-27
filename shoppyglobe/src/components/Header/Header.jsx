@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectCartItemCount } from '../../redux/cartSlice';
-import './Header.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCartItemCount } from "../../redux/cartSlice";
+import "./Header.css";
 
 /**
  * @function Header
@@ -10,7 +10,7 @@ import './Header.css';
  */
 function Header() {
   // Get live cart item count (Requirement: Redux 50 Marks)
-  const cartItemCount = useSelector(selectCartItemCount); 
+  const cartItemCount = useSelector(selectCartItemCount);
 
   return (
     <header className="header">
@@ -18,15 +18,19 @@ function Header() {
         <Link to="/">🛍️ ShoppyGlobe</Link>
       </div>
       <nav className="nav-menu">
-        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/" className="nav-link">
+          Home
+        </Link>
         <Link to="/cart" className="nav-link cart-icon-link">
-          🛒 Cart 
+          🛒 Cart
           {/* Display cart count badge if items exist */}
           {cartItemCount > 0 && (
             <span className="cart-count">{cartItemCount}</span>
           )}
         </Link>
-        <Link to="/checkout" className="nav-link checkout-link">Checkout</Link>
+        <Link to="/checkout" className="nav-link checkout-link">
+          Checkout
+        </Link>
       </nav>
     </header>
   );

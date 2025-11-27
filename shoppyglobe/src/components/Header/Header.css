@@ -6,7 +6,7 @@
   background-color: var(--text-dark); /* Dark background */
   color: white;
   box-shadow: var(--shadow-light);
-  position: sticky; 
+  position: sticky;
   top: 0;
   z-index: 1000;
 }
@@ -20,7 +20,7 @@
 
 .nav-menu {
   display: flex;
-  gap: 1.5rem; 
+  gap: 1.5rem;
 }
 
 .nav-link {
@@ -36,7 +36,7 @@
 }
 
 .cart-icon-link {
-  position: relative; 
+  position: relative;
   display: flex;
   align-items: center;
 }
