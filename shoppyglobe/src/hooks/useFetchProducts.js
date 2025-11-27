@@ -8,6 +8,7 @@ const ALL_PRODUCTS_URL = "https://dummyjson.com/products";
  * @description Custom hook to fetch the product list from the API (Requirement: Data Fetching 20 Marks).
  * Handles loading, data storage, and error handling.
  */
+
 const useFetchProducts = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
