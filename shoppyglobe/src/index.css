@@ -1,0 +1,77 @@
+/* Global Reset and Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --accent-color: #ffc107;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --background-light: #f8f9fa;
+  --text-dark: #343a40;
+  --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* Base button and link styles */
+button {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+button:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.3s;
+}
+
+/* Utility to center container - FIX: Removed max-width to use full viewport */
+.app-content {
+  /* FIX: Using 95% width for a slight margin, allowing full width on large screens */
+  width: 95%; 
+  max-width: 1600px; /* Allow wider content but maintain centered structure */
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Custom Alert/Message Box fix */
+.message-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--success-color);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+  z-index: 2000;
+}
+
+.message-box.show {
+  opacity: 1;
+  visibility: visible;
+}

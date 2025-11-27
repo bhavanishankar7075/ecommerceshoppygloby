@@ -1,0 +1,70 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--text-dark); /* Dark background */
+  color: white;
+  box-shadow: var(--shadow-light);
+  position: sticky; 
+  top: 0;
+  z-index: 1000;
+}
+
+.logo a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 1.5rem; 
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.nav-link:hover {
+  color: var(--accent-color);
+}
+
+.cart-icon-link {
+  position: relative; 
+  display: flex;
+  align-items: center;
+}
+
+.cart-count {
+  background-color: var(--danger-color); /* Red circle for a badge */
+  color: white;
+  border-radius: 50%;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Responsiveness: Stack navigation on small screens */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    padding: 1rem 0.5rem;
+  }
+  .nav-menu {
+    margin-top: 0.5rem;
+    gap: 1rem;
+    width: 100%;
+    justify-content: space-around;
+  }
+}
