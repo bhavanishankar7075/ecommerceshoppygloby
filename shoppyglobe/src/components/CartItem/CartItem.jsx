@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { removeItem, updateQuantity } from '../../redux/cartSlice';
-import './CartItem.css';
+import React from "react";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { removeItem, updateQuantity } from "../../redux/cartSlice";
+import "./CartItem.css";
 
 /**
  * @function CartItem
@@ -11,7 +11,7 @@ import './CartItem.css';
 function CartItem({ item }) {
   const { id, title, price, thumbnail, quantity } = item;
   const dispatch = useDispatch();
-  
+
   // Calculate subtotal for the item
   const subtotal = price * quantity;
 
@@ -35,13 +35,13 @@ function CartItem({ item }) {
 
   return (
     <div className="cart-item-card">
-      <img 
-        src={thumbnail} 
-        alt={title} 
-        className="cart-item-image" 
-        loading="lazy" 
+      <img
+        src={thumbnail}
+        alt={title}
+        className="cart-item-image"
+        loading="lazy"
       />
-      
+
       <div className="item-details">
         <h3>{title}</h3>
         {/* FIX: Changed currency symbol to INR */}
@@ -49,9 +49,17 @@ function CartItem({ item }) {
       </div>
 
       <div className="quantity-control">
-        <button onClick={handleDecrease} className="qty-btn" disabled={quantity <= 1}>-</button>
+        <button
+          onClick={handleDecrease}
+          className="qty-btn"
+          disabled={quantity <= 1}
+        >
+          -
+        </button>
         <span className="current-qty">{quantity}</span>
-        <button onClick={handleIncrease} className="qty-btn">+</button>
+        <button onClick={handleIncrease} className="qty-btn">
+          +
+        </button>
       </div>
 
       <div className="item-subtotal">
