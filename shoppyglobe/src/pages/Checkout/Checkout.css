@@ -57,7 +57,8 @@
   margin-bottom: 0.5rem;
 }
 
-.form-group input, .form-group textarea {
+.form-group input,
+.form-group textarea {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ced4da;
@@ -70,7 +71,8 @@
   min-height: 100px;
 }
 
-.form-group input.input-error, .form-group textarea.input-error {
+.form-group input.input-error,
+.form-group textarea.input-error {
   border-color: var(--danger-color);
 }
 
