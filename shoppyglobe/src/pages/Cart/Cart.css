@@ -90,7 +90,6 @@
   padding: 1rem;
 }
 
-
 /* Responsiveness: Stack layout vertically on tablet and mobile */
 @media (max-width: 992px) {
   .cart-layout {
