@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import cartReducer, { saveState } from './cartSlice'; // Import saveState
+import { configureStore } from "@reduxjs/toolkit";
+import cartReducer, { saveState } from "./cartSlice"; // Import saveState
 
 // Custom middleware to save state to localStorage after every dispatch
 const localStorageMiddleware = ({ getState }) => {
@@ -16,9 +16,9 @@ const localStorageMiddleware = ({ getState }) => {
  */
 export const store = configureStore({
   reducer: {
-    cart: cartReducer, 
+    cart: cartReducer,
   },
   // Apply the custom middleware to ensure persistence
-  middleware: (getDefaultMiddleware) => 
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(localStorageMiddleware),
 });
