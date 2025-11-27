@@ -12,12 +12,13 @@
 .product-grid {
   display: grid;
   /* Responsive grid: 2 columns on small screens, 3 on medium, 4 on large */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   justify-items: center;
 }
 
-.status-message, .error-message {
+.status-message,
+.error-message {
   padding: 3rem;
   font-size: 1.5rem;
   color: var(--secondary-color);
