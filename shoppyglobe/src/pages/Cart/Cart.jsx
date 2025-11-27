@@ -1,9 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectCartItems, selectCartTotal } from '../../redux/cartSlice';
-import CartItem from '../../components/CartItem/CartItem';
-import { Link, useNavigate } from 'react-router-dom';
-import './Cart.css';
+import React from "react";
+import { useSelector } from "react-redux";
+import { selectCartItems, selectCartTotal } from "../../redux/cartSlice";
+import CartItem from "../../components/CartItem/CartItem";
+import { Link, useNavigate } from "react-router-dom";
+import "./Cart.css";
 
 /**
  * @function Cart
@@ -17,7 +17,7 @@ function Cart() {
 
   // Handler to navigate to checkout
   const handleCheckout = () => {
-    navigate('/checkout');
+    navigate("/checkout");
   };
 
   // Display message if cart is empty
@@ -36,11 +36,11 @@ function Cart() {
   return (
     <div className="cart-container">
       <h1>Your Shopping Cart</h1>
-      
+
       <div className="cart-layout">
         <div className="cart-items-list">
           {/* Render list of cart items */}
-          {cartItems.map(item => (
+          {cartItems.map((item) => (
             <CartItem key={item.id} item={item} />
           ))}
         </div>
@@ -62,11 +62,8 @@ function Cart() {
             {/* FIX: Changed currency symbol to INR */}
             <span className="summary-value total">₹{cartTotal.toFixed(2)}</span>
           </div>
-          
-          <button 
-            className="checkout-btn"
-            onClick={handleCheckout}
-          >
+
+          <button className="checkout-btn" onClick={handleCheckout}>
             Proceed to Checkout
           </button>
         </div>
