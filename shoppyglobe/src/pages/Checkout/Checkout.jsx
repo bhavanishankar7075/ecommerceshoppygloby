@@ -165,7 +165,6 @@ function Checkout() {
           </ul>
           <div className="summary-total-checkout">
             <span>Total to Pay:</span>
-            {/* FIX: Changed currency symbol to INR */}
             <span className="summary-total-value">₹{cartTotal.toFixed(2)}</span>
           </div>
         </div>
