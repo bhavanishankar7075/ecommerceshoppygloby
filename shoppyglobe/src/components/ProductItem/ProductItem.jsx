@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types'; 
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addItem } from '../../redux/cartSlice';
-import './ProductItem.css';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../redux/cartSlice";
+import "./ProductItem.css";
 
 /**
  * @function ProductItem
@@ -20,33 +20,30 @@ function ProductItem({ product }) {
 
   return (
     <div className="product-card">
-      <img 
-        src={thumbnail} 
-        alt={title} 
-        className="product-image" 
+      <img
+        src={thumbnail}
+        alt={title}
+        className="product-image"
         loading="lazy"
       />
-      
+
       <div className="card-content">
         <Link to={`/product/${id}`} className="product-title-link">
           <h2>{title}</h2>
         </Link>
-        
+
         {/* FIX: Changed currency symbol to INR */}
         <p className="product-price">₹{price.toFixed(2)}</p>
-        
+
         <p className="product-description">{description.substring(0, 70)}...</p>
-        
+
         <div className="card-actions">
           {/* FIX: Added View Details button */}
           <Link to={`/product/${id}`} className="view-details-btn">
             View Details
           </Link>
-          
-          <button 
-            className="add-to-cart-btn" 
-            onClick={handleAddToCart}
-          >
+
+          <button className="add-to-cart-btn" onClick={handleAddToCart}>
             Add to Cart
           </button>
         </div>
