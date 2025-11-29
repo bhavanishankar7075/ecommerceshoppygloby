@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* FIX: Ensure 100% width and use consistent padding for full screen coverage */
+  /* Ensure 100% width and use consistent padding for full screen coverage */
   width: 100%;
   padding: 1rem 2rem;
   background-color: var(--text-dark); /* Dark background */
@@ -23,6 +23,7 @@
 .nav-menu {
   display: flex;
   gap: 1.5rem;
+  align-items: center; /* Ensure buttons align with links */
 }
 
 .nav-link {
@@ -35,6 +36,20 @@
 
 .nav-link:hover {
   color: var(--accent-color);
+}
+
+.auth-btn {
+  background: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid white;
+}
+
+.auth-btn:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 .cart-icon-link {
@@ -65,7 +80,7 @@
   }
   .nav-menu {
     margin-top: 0.5rem;
-    gap: 1rem;
+    gap: 0.5rem;
     width: 100%;
     justify-content: space-around;
   }

@@ -49,6 +49,9 @@
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   height: fit-content;
+  display: flex; /* FIX 4 */
+  flex-direction: column; /* FIX 5: Keep content aligned */
+  gap: 1rem; /* FIX 6: Space between elements */
 }
 
 .cart-summary h2 {
@@ -67,19 +70,34 @@
 
 .summary-total {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* FIX: Stack total labels for better balance */
   margin-top: 1.5rem;
   padding-top: 1.5rem;
   border-top: 1px dashed var(--secondary-color);
 }
 
+/* FIX: Added a wrapper for the total amount line */
+.summary-total-amount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
 .summary-total span {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.summary-total .total-label {
   font-size: 1.4rem;
   font-weight: 700;
 }
 
-.summary-total .total {
+.summary-total .total-amount {
   color: var(--danger-color);
+  font-size: 1.6rem;
+  font-weight: 800;
 }
 
 .checkout-btn {
@@ -88,6 +106,11 @@
   color: var(--text-dark);
   margin-top: 1.5rem;
   padding: 1rem;
+  text-align: center;
+  border-radius: 8px; /* FIX 1: Rounded button */
+  display: block; /* FIX 2: Full width alignment */
+  font-weight: 600; /* FIX 3: Better look */
+  cursor: pointer;
 }
 
 /* Responsiveness: Stack layout vertically on tablet and mobile */

@@ -59,7 +59,7 @@
   margin-bottom: 1rem;
 }
 
-/* New style for action buttons container */
+/* Style for action buttons container */
 .card-actions {
   display: flex;
   justify-content: space-between;

@@ -1,40 +1,66 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect, startTransition } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  selectCartItems,
-  selectCartTotal,
-  clearCart,
-} from "../../redux/cartSlice";
+import { useAuth } from "../../hooks/useAuth";
 import "./Checkout.css";
 
-/**
- * @function Checkout
- * @description Dummy form for user details and order summary.
- */
 function Checkout() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cartItems = useSelector(selectCartItems);
-  const cartTotal = useSelector(selectCartTotal);
+  const { isAuthenticated } = useAuth();
 
-  // State for form data and submission status
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
+
+  // Load cart items from localStorage and compute total
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
+    // read local storage
+    const raw = localStorage.getItem("shoppyglobe_local_cart_items") || "[]";
+    let localItems = [];
+    try {
+      localItems = JSON.parse(raw);
+      if (!Array.isArray(localItems)) localItems = [];
+    } catch {
+      localItems = [];
+    }
+
+    // normalize items (safe defaults)
+    const normalized = localItems.map((item) => ({
+      ...item,
+      quantity: typeof item.quantity === "number" ? item.quantity : 1,
+      price: item.price ?? item.product?.price ?? 0,
+      title: item.title ?? item.product?.name ?? "Product",
+    }));
+
+    // compute total
+    const total = normalized.reduce(
+      (sum, it) => sum + it.price * it.quantity,
+      0
+    );
+
+    // Batch state updates as a non-urgent transition to avoid cascading render warnings
+    startTransition(() => {
+      setCartItems(normalized);
+      setCartTotal(total);
+    });
+
+    // If cart empty and order not placed, redirect to cart page
+    if (normalized.length === 0 && !isOrderPlaced) {
+      navigate("/cart");
+    }
+  }, [isAuthenticated, navigate, isOrderPlaced]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     address: "",
   });
-  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [formErrors, setFormErrors] = useState({});
 
-  // Redirect if cart is empty
-  useEffect(() => {
-    if (cartItems.length === 0 && !isOrderPlaced) {
-      navigate("/cart");
-    }
-  }, [cartItems, isOrderPlaced, navigate]);
-
-  // Basic form validation
   const validateForm = () => {
     const errors = {};
     if (!formData.name.trim()) errors.name = "Full name is required.";
@@ -47,26 +73,27 @@ function Checkout() {
     return Object.keys(errors).length === 0;
   };
 
-  // Handler for input change
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Handler for "Place Order" button
   const handlePlaceOrder = (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // 1. Display message "Order placed"
-      setIsOrderPlaced(true);
+    if (!validateForm()) return;
 
-      // 2. Empty the cart (Redux will persist this empty state)
-      dispatch(clearCart());
+    setIsOrderPlaced(true);
 
-      // 3. Redirect the user back to the Home page automatically (after a delay)
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    }
+    // Clear local cart and update UI
+    localStorage.removeItem("shoppyglobe_local_cart_items");
+    // Batch the cart clear to state as a transition too
+    startTransition(() => {
+      setCartItems([]);
+      setCartTotal(0);
+    });
+
+    setTimeout(() => {
+      navigate("/");
+    }, 3000);
   };
 
   if (isOrderPlaced) {
@@ -74,12 +101,11 @@ function Checkout() {
       <div className="checkout-container success-state">
         <h1>🎉 Order Placed Successfully!</h1>
         <p>Thank you for shopping with ShoppyGlobe!</p>
-        <p>You will be redirected to the home page shortly.</p>
+        <p>You will be redirected shortly.</p>
       </div>
     );
   }
 
-  // Fallback for empty cart (should be caught by useEffect, but good for safety)
   if (cartItems.length === 0) {
     return (
       <div className="checkout-container">
@@ -93,14 +119,13 @@ function Checkout() {
       <h1>Checkout</h1>
 
       <div className="checkout-layout">
-        {/* User Details Form */}
+        {/* User form */}
         <div className="checkout-form-block">
           <h2>Shipping Information</h2>
           <form onSubmit={handlePlaceOrder} noValidate>
             <div className="form-group">
               <label htmlFor="name">Full Name</label>
               <input
-                type="text"
                 id="name"
                 name="name"
                 value={formData.name}
@@ -115,9 +140,9 @@ function Checkout() {
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
               <input
-                type="email"
                 id="email"
                 name="email"
+                type="email"
                 value={formData.email}
                 onChange={handleChange}
                 className={formErrors.email ? "input-error" : ""}
@@ -135,34 +160,33 @@ function Checkout() {
                 value={formData.address}
                 onChange={handleChange}
                 className={formErrors.address ? "input-error" : ""}
-              ></textarea>
+              />
               {formErrors.address && (
                 <p className="error-text">{formErrors.address}</p>
               )}
             </div>
 
             <button type="submit" className="place-order-btn">
-              {/* FIX: Changed currency symbol to INR */}
               Place Order (₹{cartTotal.toFixed(2)})
             </button>
           </form>
         </div>
 
-        {/* Order Summary */}
+        {/* Order summary */}
         <div className="order-summary-block">
           <h2>Summary ({cartItems.length} Products)</h2>
           <ul className="summary-list">
-            {cartItems.map((item) => (
-              <li key={item.id} className="summary-item">
+            {cartItems.map((item, index) => (
+              <li key={item.id ?? index} className="summary-item">
                 <span className="summary-item-title">{item.title}</span>
                 <span className="summary-item-qty">x{item.quantity}</span>
-                {/* FIX: Changed currency symbol to INR */}
                 <span className="summary-item-price">
                   ₹{(item.price * item.quantity).toFixed(2)}
                 </span>
               </li>
             ))}
           </ul>
+
           <div className="summary-total-checkout">
             <span>Total to Pay:</span>
             <span className="summary-total-value">₹{cartTotal.toFixed(2)}</span>

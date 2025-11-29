@@ -5,13 +5,10 @@ import "./ProductList.css";
 
 /**
  * @function ProductList
- * @description Displays the main product catalog using the custom hook.
+ * @description Displays the main product catalog.
  */
 function ProductList() {
   const { products, isLoading, error } = useFetchProducts();
-
-  // Note: Search/Filter functionality will be implemented with Redux in the next phase if required,
-  // as the current Redux slice only covers the cart.
 
   // Conditional Rendering
   if (isLoading) {
@@ -35,7 +32,7 @@ function ProductList() {
     <div className="product-list-container">
       <h1>All Products</h1>
 
-      {/* Product List Rendering (Requirement: React Lists 10 Marks) */}
+      {/* Product List Rendering */}
       <div className="product-grid">
         {products.length > 0 ? (
           products.map((product) => (

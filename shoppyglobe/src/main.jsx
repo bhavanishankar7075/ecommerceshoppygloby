@@ -4,19 +4,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import App from "./App.jsx";
+import { AuthProvider } from "./hooks/useAuth";
+import { ToastProvider } from "./hooks/useToast"; // FIX: Import Toast Provider
+import "./hooks/Toast.css"; // FIX: Import Toast CSS
 import "./index.css";
 
-// We define the router here as per createBrowserRouter best practices
-// but the <RouterProvider> is what wraps the application.
+// Define the router here using lazy loading for all route components
 const router = createBrowserRouter([
   {
-    // The main parent route wraps the layout (Header/Outlet)
     path: "/",
     element: <App />,
     children: [
       {
         index: true,
-        // Lazy loading and Suspense for all components (Requirement: Performance 20 Marks)
         lazy: async () => {
           const { default: ProductList } = await import(
             "./pages/ProductList/ProductList.jsx"
@@ -25,7 +25,6 @@ const router = createBrowserRouter([
         },
       },
       {
-        // Dynamic route for Product Detail
         path: "product/:productId",
         lazy: async () => {
           const { default: ProductDetail } = await import(
@@ -50,7 +49,24 @@ const router = createBrowserRouter([
           return { element: <Checkout /> };
         },
       },
-      // The 404 handler is defined separately below
+      // Authentication Routes
+      {
+        path: "login",
+        lazy: async () => {
+          const { default: Login } = await import("./pages/Auth/Login.jsx");
+          return { element: <Login /> };
+        },
+      },
+      {
+        path: "register",
+        lazy: async () => {
+          const { default: Register } = await import(
+            "./pages/Auth/Register.jsx"
+          );
+          return { element: <Register /> };
+        },
+      },
+      // Catch-all route for 404
       {
         path: "*",
         lazy: async () => {
@@ -64,11 +80,15 @@ const router = createBrowserRouter([
   },
 ]);
 
-// Renders the entire application wrapped in Redux Provider and RouterProvider
+// FIX: Wrap application with ToastProvider inside AuthProvider
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <ToastProvider>
+          <RouterProvider router={router} />
+        </ToastProvider>
+      </AuthProvider>
     </Provider>
   </React.StrictMode>
 );
