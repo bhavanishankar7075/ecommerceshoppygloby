@@ -1,91 +1,111 @@
-ShoppyGlobe E-commerce Application
+ShoppyGlobe E-commerce Application (Full-Stack)
 
 Project Objective
 
-This project is a basic e-commerce application named ShoppyGlobe, built using React and Vite. The primary goal was to fulfill all specified functional and non-functional requirements, demonstrating proficiency in modern component architecture, Redux state management, data handling, and performance optimization as required by the project PDF.
+This project is a complete e-commerce platform built using React (Vite) for the frontend and Node.js/Express.js with MongoDB for the backend API. The goal was to demonstrate a functional, authenticated, and persistent full-stack solution, meeting all specified requirements from both project documents.
 
 Submission Guidelines
 
 I am submitting this project under the following guidelines:
 
-I confirm that the code includes at least 25 relevant commits in the GitHub repository.
+I confirm that the project includes at least 25 relevant commits in the GitHub repository.
 
-Note: I am sending the entire code folder. The GitHub link is provided below, and I have ensured the node_modules folder is removed from the submission package.
+The submission includes all code folders (shoppyglobe and backend-api).
+
+Note: I have ensured the node_modules folder is removed from both directories in the submission package.
 
 GitHub Repository Link: https://github.com/bhavanishankar7075/ecommerceshoppygloby/tree/main/shoppyglobe
 
-Technical Overview and Implementation Details
+Architecture and File Structure
 
-1. Project Setup and Environment
+The project is split into two distinct services:
 
-Vite Project: The project was initialized using Vite, meeting the foundational requirement.
-
-Code Quality: The code uses proper indentation, clean structure, and functional components.
-
-Styling: Custom external CSS files are used for every component to achieve a fully responsive and modern layout across all screen sizes.
-
-Currency: All prices and totals use the Indian Rupee symbol (₹).
-
-2. File Structure and Component Hierarchy
-
-The project follows a modular, organized structure:
-
-shoppyglby/
-├── src/
-│   ├── components/
-│   │   ├── Header/
-│   │   ├── ProductItem/
-│   │   ├── CartItem/
-│   │   └── Loader/
-│   ├── pages/
-│   │   ├── ProductList/
-│   │   ├── ProductDetail/
-│   │   ├── Cart/
-│   │   ├── Checkout/
-│   │   └── NotFound/
-│   ├── redux/
-│   │   ├── store.js
-│   │   └── cartSlice.js
-│   ├── hooks/
-│   │   └── useFetchProducts.js
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
+ecommerceshoppygloby/
+├── backend-api/  <-- Node.js/Express Server
+│   ├── routes/
+│   │   ├── authRoutes.js    # /register, /login
+│   │   ├── productRoutes.js # GET products
+│   │   └── cartRoutes.js    # Protected CRUD
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Product.js
+│   │   └── Cart.js
+│   ├── middleware/
+│   │   └── auth.js
+│   └── server.js
+└── shoppyglobe/  <-- React Frontend (Vite)
+    ├── src/
+    │   ├── components/
+    │   ├── pages/         # (ProductList, Cart, Checkout, Auth, NotFound)
+    │   ├── redux/         # (Maintained for local badge count/display)
+    │   ├── hooks/
+    │   └── App.jsx
 
 
+Technical Implementation Details
 
-3. State Management and Data Flow
+1. Backend API (Node.js, Express, MongoDB, JWT)
 
-Redux Implementation: Redux Toolkit manages the central cart state. This includes implementing all necessary actions (addItem, removeItem, updateQuantity, clearCart), reducers, and selectors (for cart count and total).
+API Setup: Built using Node.js and Express.js, running on http://localhost:5000.
 
-Data Persistence: A custom Redux middleware is implemented to save the cart state to localStorage and persists even if the browser is reloaded.
+MongoDB Integration: Data is persisted in MongoDB using Mongoose.
 
-Props: I used prop-types extensively in reusable components (ProductItem, CartItem) to ensure data integrity and reusability.
+Collections: Implemented Products (name, price, stock) and Cart (linked to User via ObjectId, containing product references).
 
-4. Data Fetching, Routing, and Performance
+CRUD Operations: Full Mongoose CRUD logic is implemented for both products and the user's cart.
 
-Data Fetching: Products are fetched from the external endpoint: https://dummyjson.com/products. Custom hooks and useEffect manage the fetching and state.
+Authentication & Authorization:
 
-Routing: Implemented using createBrowserRouter to handle all defined routes, including the dynamic Product Detail page and the custom NotFound (404) component.
+Implemented JWT-based authentication (bcryptjs for hashing, jsonwebtoken for tokens).
 
-Performance Optimization:
+Routes /api/register and /api/login handle authentication.
 
-Code Splitting: All major page components are lazy-loaded using React.lazy and wrapped in Suspense.
+Crucial: All cart routes (GET /cart, POST /cart, etc.) are protected by the JWT middleware, allowing access only to logged-in users.
 
-Image Optimization: Native loading="lazy" attribute is applied to all product images.
+Error Handling: Implemented global error handling middleware and validation (e.g., product existence checks).
 
-5. Event and Interaction Logic
+2. Frontend (React, Data Flow, UX)
 
-Cart Actions: Event handlers successfully manage the addition, removal, and quantity updates of items. The quantity control logic strictly enforces the requirement that the item count must be 1 or greater.
+Integration: The frontend is fully integrated with the backend API, sending the JWT token with all protected requests.
 
-Checkout Logic: The component features form validation. Upon successful submission, the cart is cleared (via Redux clearCart), and the user is automatically redirected back to the Home page after showing a success message.
+Component Architecture: All required components (App, Header, ProductList, Cart, Checkout, NotFound) are implemented using functional components and hooks.
 
-How to Run Locally
+Data Flow: Redux is simplified to manage local state (e.g., the shopping cart badge count) for immediate user experience (UX) feedback, while the true source of cart data is the backend API.
 
-Clone the repository.
+Performance Optimization: All major page components are lazy-loaded using React.lazy and Suspense. Images use native loading="lazy".
+
+Styling: The application is fully responsive, and all currency is correctly displayed as the Indian Rupee symbol (₹).
+
+UX Actions: Implemented instant toast notifications and immediate header count updates upon successfully adding an item to the remote cart.
+
+How to Run the Full-Stack Project Locally
+
+Backend Setup:
+
+Navigate to the backend-api directory.
+
+Run npm install.
+
+Crucial: Create a .env file with your MONGO_URI and JWT_SECRET.
+
+Populate DB: Insert the product data into your MongoDB products collection.
+
+Start the server: npm start (Runs on http://localhost:5000).
+
+Frontend Setup:
 
 Navigate to the shoppyglobe directory.
 
-Install dependencies (npm install).
+Run npm install.
 
-Run the application (npm run dev).
+Start the frontend: npm run dev (Runs on http://localhost:5173/).
+
+Testing Sequence:
+
+Login/Register via the frontend UI.
+
+Test cart operations (Add, Remove, Update).
+
+API Testing Documentation
+
+Detailed documentation proving all API routes (Auth, Products, Cart CRUD) are functional, including screenshots from ThunderClient and MongoDB, is provided separately in the backend-api/docs/ folder.
