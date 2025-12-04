@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateLocalCart } from "../../redux/cartSlice";
 import { useAuth } from "../../hooks/useAuth";
-import { useToast } from "../../hooks/useToast"; // Correctly imported
+import { useToast } from "../../hooks/useToast"; 
 import "./ProductItem.css";
 
 // API Base URL

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
-import { updateLocalCart } from "../../redux/cartSlice"; // For updating header badge
+import { updateLocalCart } from "../../redux/cartSlice"; 
 import CartItem from "../../components/CartItem/CartItem";
 import "./Cart.css";
 

@@ -40,7 +40,7 @@ function Header() {
             </button>
           </>
         ) : (
-          // Authentication Routes (60 Marks)
+          // Authentication Routes 
           <>
             <Link to="/login" className="nav-link auth-btn">
               Login

@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import App from "./App.jsx";
 import { AuthProvider } from "./hooks/useAuth";
-import { ToastProvider } from "./hooks/useToast"; // FIX: Import Toast Provider
+import { ToastProvider } from "./hooks/useToast"; 
 import "./hooks/Toast.css"; // FIX: Import Toast CSS
 import "./index.css";
 
